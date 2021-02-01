@@ -1,0 +1,97 @@
+﻿@model IEnumerable<StoreTrainee.Models.ViewModels.Shop.CartVM>
+@{
+
+    ViewBag.Title = "CartDetails";
+
+    <!--Урок 25-->
+    int count = 1;
+}
+<br />
+<h2>Корзина</h2>
+
+@if (ViewBag.Message != null)
+{<hr />
+    <h3>@ViewBag.Message</h3>
+}
+else
+{
+    <div class="ajaxbg">
+        <span>
+            <img src="~/Content/img/25.gif" height="100" width="150" />
+        </span>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Количество
+            </th>
+            <th>
+                Цена
+            </th>
+
+            <th>
+                Фото
+            </th>
+            <th>
+
+            </th>
+
+            <th>
+                Цена
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td class="qty@(item.ProductId)">
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) ₴
+                </td>
+
+                <td>
+                    <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
+                </td>
+
+                <td>
+                    <a href="#" class="incproduct" data-id="@item.ProductId">+</a>
+                    <a href="#" class="decproduct" data-id="@item.ProductId">-</a>
+                    <a href="#" class="removeproduct" data-id="@item.ProductId">Удалить</a>
+                </td>
+
+                <td class="total@(item.ProductId)">
+                    @Html.DisplayFor(modelItem => item.Total) ₴
+                </td>
+
+
+            </tr>
+        }
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="grandtotal"><b>Общая стоимость: </b><span>@ViewBag.GrandTotal ₴</span></td>
+        </tr>
+
+    </table>
+    <br />
+    <a href="#" class="placeorder btn btn-primary float-right">Оформить заказ</a>
+}
+@section Scripts
+{
+    <script src="~/Content/MyJs/Incproduct.js"></script>
+}

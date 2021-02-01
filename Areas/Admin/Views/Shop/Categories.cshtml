@@ -1,0 +1,83 @@
+﻿@model IEnumerable<StoreTrainee.Models.ViewModels.Pages.CategoryVM>
+
+@{
+    ViewBag.Title = "Categories";
+}
+<br />
+<div>
+    <h2>Категории товаров</h2>
+</div>
+
+@if (TempData["SM"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SM"]
+    </div>
+}
+
+<div class="new-cat">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Название категории:</span>
+        </div>
+        <input type="text" id="newcatname" class="form-control" />
+    </div>
+    <p>
+        <a href="#" id="newcata" class="btn btn-outline-dark">Добавить новую категорию</a>
+        <span class="ajax-text">
+            <img src="~/Content/img/25.gif" height="40" />
+        </span>
+    </p>
+</div>
+
+@if (!Model.Any())
+{
+    <h1 class="text-center">There ara no catogorie.</h1>
+}
+else
+{
+    <table class="table sorting " id="pages">
+        <tr class="home">
+            <th>
+                @*@Html.DisplayNameFor(model => model.Name)*@
+                Название
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+        <tr id="id_@item.Id">
+            <td>
+                <div class="container">
+
+                    <!--Урок 10-->
+                    <div class="row">
+                        <div class="col">
+                            <div class="ajaxdivtd"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!--<div class="col-0">
+                           <div class="ui-icon ui-icon-arrowthick-2-n-s" style="margin-top: 10px; "></div>
+                        </div>-->
+                        <div class="col">
+                            @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                @Html.ActionLink("Удалить", "DeleteCategory", new { id = item.Id }, new { @class = "delete btn btn-outline-dark" })
+            </td>
+        </tr>
+}
+
+    </table>
+}
+@section Scripts
+{
+    <script src="~/Content/MyJs/Categories.js"></script>
+}

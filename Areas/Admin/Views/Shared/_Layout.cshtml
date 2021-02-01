@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        ul {
+            padding: 0;
+            margin: 0; 
+           }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        @Html.ActionLink("Phone store", "Index", "Dashboard",  "", new { @class = "navbar-brand" })
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">@Html.ActionLink("Страницы", "Index", "Pages", "", new { @class = "nav-link " })</li>
+                @*<li class="nav-item">@Html.ActionLink("Боковая панель", "Editsidebar", "Pages", "", new { @class = "nav-link" })</li>*@
+                <li class="nav-item">@Html.ActionLink("Категории", "Categories", "Shop", "", new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Товары", "Products", "Shop", "", new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Список заказов", "Orders", "Shop", "", new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink(" Магазин", "Index", "Shop", new { area = "" }, new { @class = "nav-link" })</li>
+                @*@Html.ActionLink(" Area", "Index", "Shop", new { area = "" }, null)*@
+            </ul>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year</p>
+        </footer>
+    </div>
+
+
+@Scripts.Render("~/bundles/jquery")
+<!--Подключаем бандл к сайту -->
+@Scripts.Render("~/bundles/jqueryui")
+
+@Scripts.Render("~/bundles/bootstrap")
+
+@Scripts.Render("~/bundles/ckeditor")
+
+@RenderSection("scripts", required: false)
+</body>
+</html>

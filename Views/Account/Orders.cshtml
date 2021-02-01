@@ -1,0 +1,53 @@
+﻿@model IEnumerable<StoreTrainee.Models.ViewModels.Account.OrdersForUserVM>
+
+@{
+    ViewBag.Title = "Orders";
+}
+<br />
+<h2>Ваши заказы</h2>
+
+@if (!Model.Any())
+{
+    <h2>У вас нет заказов!</h2>
+}
+else
+{
+<table class="table">
+    <tr>
+        <th>
+          Номер заказа
+        </th>
+        <th>
+           Детали заказа
+        </th>
+        <th>
+           Дата заказа
+        </th>
+        <th>
+            Общая стоимость
+        </th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderNumber)
+        </td>
+        <td>
+                @foreach (var item2 in item.ProductAndQuantity)
+                {
+                    @item2.Key @:x @item2.Value<br />
+                }
+            </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+    </tr>
+}
+
+</table>
+}

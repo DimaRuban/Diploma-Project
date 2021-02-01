@@ -1,0 +1,115 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr") 
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        @Html.ActionLink("Phone store", "Index", "Dashboard", "", new { @class = "navbar-brand" })
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                @*<li class="nav-item">@Html.ActionLink("Каталог", "CategoryMenuPartial", "Shop", "", new { @class = "nav-link" })</li>*@
+                <li class="nav-item">@Html.ActionLink("Корзина", "Index", "Cart", "", new { @class = "nav-link" })</li>
+            
+                  @if (Request.IsAuthenticated && User.IsInRole("User"))
+                {
+                      <li class="nav-item">@Html.ActionLink("Заказы", "Orders", "Account", "", new { @class = "nav-link" })</li>                
+                }
+
+                @if (Request.IsAuthenticated)
+              {
+                  <li class="nav-item">@Html.ActionLink("Выход", "logout", "Account", "", new { @class = "nav-link" })</li>
+              }
+              else
+              {
+                  if (ViewBag.Title == "Login")
+                  {
+                  <li class="nav-item">@Html.ActionLink("Вход", "login", "Account", null, new { @class = "navbar-text", style = "text-decoration:none" })&nbsp;&nbsp;</li>
+                  }
+                  else
+                  {
+                  <li class="nav-item">@Html.ActionLink("Вход", "logout", "Account", "", new { @class = "navbar-text", style = "text-decoration:none" })&nbsp;&nbsp;</li>
+                  }
+
+              }
+                 @if (Request.IsAuthenticated && User.IsInRole("User"))
+                {
+                    if (ViewBag.Title == "UserProfile")
+                    {
+                        <li class="active"> @Html.Action("UserNavPartial", "Account", new { area = "" }) </li>
+                    }
+                    else
+                    {
+                        <li> @Html.Action("UserNavPartial", "Account", new { area = "" }) </li>
+                    }
+                }
+                <!--**********************-->
+           
+
+            <!--Урок 25-->
+            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <span class="navbar-text">
+                    @Html.ActionLink("Admin-панель", "Index", "Dashboard", new { area = "Admin" }, null)
+                </span>
+            }
+            else
+            {
+                if (Request.IsAuthenticated && ViewBag.Title != "CartDetails")
+                {
+                <span class="navbar-text" style="left:40%"> 
+                   
+                    @Html.Action("CartPartial", "Cart")
+                </span>
+                }
+            }
+
+           </ul>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                @Html.Action("PagesMenuPartial", "Pages")
+            </ul>
+            @*<span class="navbar-text">
+                @Html.Action("CartPartial", "Cart")
+            </span>*@
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-2 list-group">
+                @Html.Action("CategoryMenuPartial", "Shop")
+            </div>
+
+            <div class="col">
+                @RenderBody()
+            </div>
+        </div>
+        <br />
+        <br />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My Phone Store</p>
+        </footer>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
